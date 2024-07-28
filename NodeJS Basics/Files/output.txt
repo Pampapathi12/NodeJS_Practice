@@ -1,0 +1,5 @@
+this is node js file
+
+the content  of this file will be appended to the content of the input.txt and will be written in output.txt file
+
+ Date created Sun Jul 28 2024 14:46:14 GMT+0530 (India Standard Time)
