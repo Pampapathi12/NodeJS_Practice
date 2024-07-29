@@ -1,1 +1,0 @@
-alert('welcome to node js application');

@@ -18,13 +18,16 @@ const server = http.createServer((request, response) => {
     // response.end(path);
 
     if(path === '/' || path.toLocaleLowerCase() === '/home'){
-        response.end('ure in home page')
+        // response.end(html)
+        response.end(html.replace('{{%CONTENT%}}', 'You are in Home page'));
     } else if(path.toLocaleLowerCase() === '/about'){
-        response.end('ure in about page')
-    } else if(path.toLocaleLowerCase() === '/content'){
-        response.end('ure in content page')
+        response.end(html.replace('{{%CONTENT%}}', 'You are in about page'))
+    } else if(path.toLocaleLowerCase() === '/contact'){
+        // response.end('ure in content page')
+        response.end(html.replace('{{%CONTENT%}}', 'You are in Contact page'))
     } else {
-        response.end('Error 404: Page Not found')
+        // response.end('Error 404: Page Not found')
+        response.end(html.replace('{{%CONTENT%}}', 'Error 404: Page Not found'))
     }
 
 }); // each request will execute the call back function each time new request
@@ -76,5 +79,6 @@ server.listen(8000,'127.0.0.1', () =>{
 
 // 12. Creating Routes in NodeJS
 // 13. sending HTML Response instead of text message for the both err and success
+// 14. Setting Headers for response
 
 
