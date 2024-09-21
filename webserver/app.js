@@ -1,13 +1,29 @@
 const readline = require('readline');
 const fs = require('fs');
 const http = require('http');
+const { error, profile } = require('console');
+const path = require('path');
 
 // creating the web server
 // 1. create server
 // 2. run server
 
 const html = fs.readFileSync('./Template/index.html', 'utf-8') //  here sending the the html content as response when server started
-
+let products = JSON.parse(fs.readFileSync('./data/product.json', 'utf-8'))
+let productListHtml = fs.readFileSync('./Template/product-list.html', 'utf-8');
+let productHtmlArray = products.map((prod)=>{
+        let output = productListHtml.replace('{{%IMAGE}}',prod.productImage);
+      output =  output.replace('{{%NAME%}}', prod.name);
+      output =  output.replace('{{%MODELNAME%}}', prod.modeName);
+      output =   output.replace('{{%MODELNO%}}', prod.modelNumber);
+      output =   output.replace('{{%SIZE%}}', prod.size);
+      output =   output.replace('{{%CAMERA%}}', prod.camera);
+      output =  output.replace('{{%PRICE%}}', prod.price);
+      output =  output.replace('{{%COLOR%}}', prod.color);
+    //   output =  output.replace('{{%ID%}}', prod.id);
+        
+        return output;
+})
 const server = http.createServer((request, response) => {
     // response.end('<h1>Hello from the server<h1>')
     // response.end(html)
@@ -17,29 +33,46 @@ const server = http.createServer((request, response) => {
     let path = request.url;
     // response.end(path);
 
-    if(path === '/' || path.toLocaleLowerCase() === '/home'){
+    if (path === '/' || path.toLocaleLowerCase() === '/home') {
         // response.end(html)
         response.writeHead(200, {
             'Content-type': 'text/html',
             'my-header': 'Hello, World'
         }) // Setting Headers for response
         response.end(html.replace('{{%CONTENT%}}', 'You are in Home page'));
-    } else if(path.toLocaleLowerCase() === '/about'){
+    } else if (path.toLocaleLowerCase() === '/about') {
         response.writeHead(200, {
             'Content-type': 'text/html',
             'my-header': 'Hello, World'
         })
         response.end(html.replace('{{%CONTENT%}}', 'You are in about page'))
-    } else if(path.toLocaleLowerCase() === '/contact'){
+    } else if (path.toLocaleLowerCase() === '/contact') {
         // response.end('ure in content page')
         response.writeHead(200, {
             'Content-type': 'text/html',
             'my-header': 'Hello, World'
         })
         response.end(html.replace('{{%CONTENT%}}', 'You are in Contact page'))
-    } else {
+    } else if (path.toLocaleLowerCase() == '/products') {
+        let  productResponseHtml = html.replace('{{%CONTENT%}}', productHtmlArray.join(',')); // assing the html content to here fromthe json array to the html page
+        // response.writeHead(200, {
+        //     'Content-Type': 'application/json'
+        // });
+        response.writeHead(200, {
+            'Content-Type': 'text/html'
+        });
+        response.end(productResponseHtml)
+        console.log(productResponseHtml)
+        // console.log(productHtmlArray.join(','))
+        // fs.readFile('./data/product.json', 'utf-8', (error, data) => {
+        //     let products = json.parse(data)
+        //     response.end(data)
+        // }); // here each time when request call its callling the thie methos instead of this we need call the once time
+
+    }
+    else {
         // response.end('Error 404: Page Not found')
-        response.writeHead(400)
+        response.writeHead(404)
         response.end(html.replace('{{%CONTENT%}}', 'Error 404: Page Not found'))
     }
 
@@ -47,21 +80,21 @@ const server = http.createServer((request, response) => {
 
 //127.0.0.1:8000
 
-server.listen(8000,'127.0.0.1', () =>{
+server.listen(8000, '127.0.0.1', () => {
     console.log('server started');
 })
 
 // 9. how the web works
 
 // client -> 192.168.20.134
-// in the server where the node and java and .net application are there in that we have to access the node application to specify the url and request to the server and 
+// in the server where the node and java and .net application are there in that we have to access the node application to specify the url and request to the server and
 // server requeat and response model of clirnt and server archietecture
 // domain name -> port number access the application, address of the server
 // server have IP Address -> 192.168.20.134 , application hosted in the server
 // convert the domain name in the real IP configurstion
 // domain into actual server address -> match application of server and convert into the server IP host number
 // IP Address + port number + page
-// TCP/IP 
+// TCP/IP
 // Htpp request for the get that we are sedning the get method and resources url and http version
 // and we are sending as request header , url, language, user-agent browser type
 // request body for the request the data from the database to get the data
@@ -74,24 +107,27 @@ server.listen(8000,'127.0.0.1', () =>{
 // 11. What is Routing
 // ROuting defines the way in which the client request are handled by the application endpoints
 // 1.a File based url
-      // index.html, about.html like that
+// index.html, about.html like that
 // 1.b Resource based url
-        // the routung map name to the physical html file in the application
+// the routung map name to the physical html file in the application
 
 // Route Paramete
-   // www.nodeapp.com/Product/101
-   //  www.nodeapp.com/Books/Programming/js
-     // here 101 is paramete for getting the specific product details
+// www.nodeapp.com/Product/101
+//  www.nodeapp.com/Books/Programming/js
+// here 101 is paramete for getting the specific product details
 
 // Query String
-   // www.nodeapp.com/Books?author=john&id=101
-    // Books?author=john&id=101
-    // key and value sending the request to the api
-    // & symbol for seperate more the 1 query
+// www.nodeapp.com/Books?author=john&id=101
+// Books?author=john&id=101
+// key and value sending the request to the api
+// & symbol for seperate more the 1 query
 
 
 // 12. Creating Routes in NodeJS
 // 13. sending HTML Response instead of text message for the both err and success
 // 14. Setting Headers for response
+// 15. working with  JSON Data (1 create folder data, new file produxt.json)
+// convert json data into javascript object use the method Json.parse(data)
+// 16. Transforming JSON data into HTML( create new html product-list.html)
 
 
