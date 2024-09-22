@@ -59,6 +59,8 @@
 // transfrom stream :- zlib -> transform streams are duplex streams which cal also modify or transform data as it is read or written
 // 23. understanding streams in practice
 
+// target(24, 25, 26, 27, 28) tomarrow, at any cost complete the nodejs tutorial within 45 days compulsory() => 31 october
+
 
 const readline = require('readline');
 const fs = require('fs');
@@ -75,10 +77,10 @@ const user = require('./Modules/user');
 // 1. create server
 // 2. run server
 
-const html = fs.readFileSync('./Template/index.html', 'utf-8') //  here sending the the html content as response when server started
-let products = JSON.parse(fs.readFileSync('./data/product.json', 'utf-8'))
-let productListHtml = fs.readFileSync('./Template/product-list.html', 'utf-8');
-let productDetailtHtml = fs.readFileSync('./Template/product-details.html', 'utf-8');
+// const html = fs.readFileSync('./Template/index.html', 'utf-8') //  here sending the the html content as response when server started
+// let products = JSON.parse(fs.readFileSync('./data/product.json', 'utf-8'))
+// let productListHtml = fs.readFileSync('./Template/product-list.html', 'utf-8');
+// let productDetailtHtml = fs.readFileSync('./Template/product-details.html', 'utf-8');
 // let productHtmlArray = products.map((prod)=>{
 //         let output = productListHtml.replace('{{%IMAGE}}',prod.productImage);
 //       output =  output.replace('{{%NAME%}}', prod.name);
@@ -178,71 +180,71 @@ let productDetailtHtml = fs.readFileSync('./Template/product-details.html', 'utf
 
 const server = http.createServer(); // when ever new request hit the server request listen event
 // event driven architecture
-server.on('request', (request, response) => {
-    // response.end('<h1>Hello from the server<h1>')
-    // response.end(html)
-    // console.log('new request running')
-    // console.log(request)
-    // console.log('pamparesponse', response)
-    let { query, pathname: path } = url.parse(request.url, true) // return as object http://localhost:8000/Products?id=10&name=iphone
-    // console.log(x)
-    // let path = request.url; // this request url into the main url
-    // response.end(path);
+// server.on('request', (request, response) => {
+//     // response.end('<h1>Hello from the server<h1>')
+//     // response.end(html)
+//     // console.log('new request running')
+//     // console.log(request)
+//     // console.log('pamparesponse', response)
+//     let { query, pathname: path } = url.parse(request.url, true) // return as object http://localhost:8000/Products?id=10&name=iphone
+//     // console.log(x)
+//     // let path = request.url; // this request url into the main url
+//     // response.end(path);
 
-    if (path === '/' || path.toLocaleLowerCase() === '/home') {
-        // response.end(html)
-        response.writeHead(200, {
-            'Content-type': 'text/html',
-            'my-header': 'Hello, World'
-        }) // Setting Headers for response
-        response.end(html.replace('{{%CONTENT%}}', 'You are in Home page'));
-    } else if (path.toLocaleLowerCase() === '/about') {
-        response.writeHead(200, {
-            'Content-type': 'text/html',
-            'my-header': 'Hello, World'
-        })
-        response.end(html.replace('{{%CONTENT%}}', 'You are in about page'))
-    } else if (path.toLocaleLowerCase() === '/contact') {
-        // response.end('ure in content page')
-        response.writeHead(200, {
-            'Content-type': 'text/html',
-            'my-header': 'Hello, World'
-        })
-        response.end(html.replace('{{%CONTENT%}}', 'You are in Contact page'))
-    } else if (path.toLocaleLowerCase() == '/products') {
-        if (!query.id) {
-            let productHtmlArray = products.map((prod) => {
-                return replaceHtml(productListHtml, prod)
-            })
+//     if (path === '/' || path.toLocaleLowerCase() === '/home') {
+//         // response.end(html)
+//         response.writeHead(200, {
+//             'Content-type': 'text/html',
+//             'my-header': 'Hello, World'
+//         }) // Setting Headers for response
+//         response.end(html.replace('{{%CONTENT%}}', 'You are in Home page'));
+//     } else if (path.toLocaleLowerCase() === '/about') {
+//         response.writeHead(200, {
+//             'Content-type': 'text/html',
+//             'my-header': 'Hello, World'
+//         })
+//         response.end(html.replace('{{%CONTENT%}}', 'You are in about page'))
+//     } else if (path.toLocaleLowerCase() === '/contact') {
+//         // response.end('ure in content page')
+//         response.writeHead(200, {
+//             'Content-type': 'text/html',
+//             'my-header': 'Hello, World'
+//         })
+//         response.end(html.replace('{{%CONTENT%}}', 'You are in Contact page'))
+//     } else if (path.toLocaleLowerCase() == '/products') {
+//         if (!query.id) {
+//             let productHtmlArray = products.map((prod) => {
+//                 return replaceHtml(productListHtml, prod)
+//             })
 
-            let productResponseHtml = html.replace('{{%CONTENT%}}', productHtmlArray.join(',')); // assing the html content to here fromthe json array to the html page
-            // response.writeHead(200, {
-            //     'Content-Type': 'application/json'
-            // });
-            response.writeHead(200, {
-                'Content-Type': 'text/html'
-            });
-            response.end(productResponseHtml)
-        } else {
-            let prod = products[query.id]
-            let productDetailResponseHtml = replaceHtml(productDetailtHtml, prod)
-            response.end(html.replace('{{%CONTENT%}}', productDetailResponseHtml));
-            console.log(productDetailResponseHtml)
-        }
-        // console.log(productHtmlArray.join(','))
-        // fs.readFile('./data/product.json', 'utf-8', (error, data) => {
-        //     let products = json.parse(data)
-        //     response.end(data)
-        // }); // here each time when request call its callling the thie methos instead of this we need call the once time
+//             let productResponseHtml = html.replace('{{%CONTENT%}}', productHtmlArray.join(',')); // assing the html content to here fromthe json array to the html page
+//             // response.writeHead(200, {
+//             //     'Content-Type': 'application/json'
+//             // });
+//             response.writeHead(200, {
+//                 'Content-Type': 'text/html'
+//             });
+//             response.end(productResponseHtml)
+//         } else {
+//             let prod = products[query.id]
+//             let productDetailResponseHtml = replaceHtml(productDetailtHtml, prod)
+//             response.end(html.replace('{{%CONTENT%}}', productDetailResponseHtml));
+//             console.log(productDetailResponseHtml)
+//         }
+//         // console.log(productHtmlArray.join(','))
+//         // fs.readFile('./data/product.json', 'utf-8', (error, data) => {
+//         //     let products = json.parse(data)
+//         //     response.end(data)
+//         // }); // here each time when request call its callling the thie methos instead of this we need call the once time
 
-    }
-    else {
-        // response.end('Error 404: Page Not found')
-        response.writeHead(404)
-        response.end(html.replace('{{%CONTENT%}}', 'Error 404: Page Not found'))
-    }
+//     }
+//     else {
+//         // response.end('Error 404: Page Not found')
+//         response.writeHead(404)
+//         response.end(html.replace('{{%CONTENT%}}', 'Error 404: Page Not found'))
+//     }
 
-}) // after request then its call the call back function in the call function have a request and response data
+// }) // after request then its call the call back function in the call function have a request and response data
 
 server.listen(8000, '127.0.0.1', () => {
     console.log('server started');
@@ -254,16 +256,49 @@ server.listen(8000, '127.0.0.1', () => {
 
 // let myEmitter = new events.EventEmitter();
 
-let myEmitter = new user();// creating instance to call the user() class
+// let myEmitter = new user();// creating instance to call the user() class
 
 
 
-myEmitter.on('userCreate', (id, name) => {
-    console.log(` a new ${name} with id ${id} user is created!`)
-})
-myEmitter.on('userCreate', (id, name) => {
-    console.log(` a new user ${name} with id ${id}  data base created!`)
-})
+// myEmitter.on('userCreate', (id, name) => {
+//     console.log(` a new ${name} with id ${id} user is created!`)
+// })
+// myEmitter.on('userCreate', (id, name) => {
+//     console.log(` a new user ${name} with id ${id}  data base created!`)
+// })
 
-myEmitter.emit('userCreate', 101, 'john');
+// myEmitter.emit('userCreate', 101, 'john');
 // create class custom event
+
+// solution 1 without readable or writable streams
+// server.on('request',(req, res) =>{
+//     fs.readFile('./Files/large-file.txt', (err, data) =>{
+//         if(err){
+//             res.end('somethig went wrong')
+//             return;
+//         }
+//         res.end(data);
+//     })
+// })
+// solution 2: using readbale and writable streams
+server.on('request',(req, res) =>{
+    // fs.readFile('./Files/large-file.txt', (err, data) =>{
+    //     if(err){
+    //         res.end('somethig went wrong')
+    //         return;
+    //     }
+    //     res.end(data);
+    // })
+    let rs = fs.createReadStream('./Files/large-file.txt');
+    rs.on('data', (chunk) => {
+        // res.end(chunk)
+        res.write(chunk) // piece of data storing the data from the response and save the large memory because of the all the data on stores checun varibale at the each new data coming from the response
+        res.end(chunk);
+
+        
+
+    })
+    rs.on('error', (error)=>{
+        res.end(error.message)
+    })
+})
