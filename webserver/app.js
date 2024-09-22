@@ -50,6 +50,14 @@
 // core modules provided by nodejs, third party modules, user defined module
 // 20. Understanding event-driven architecture
 //  21. Emitting and handling custom events
+// 22. Understanding streams in NODEJS  ()
+// there are 4 streams in nodejs 1. readable strea, 2 writable stream, 3. duplex stream, 4.transform stream
+// request stream -> read file stream (readable stream)
+// method -> data & end, read & pipe, -> readable streams events
+// (writablse stream) :-  drain & finish , write & end -> important readbale streams  events
+// duplex stream :-  bothe readbake and writable streams -> web sockets
+// transfrom stream :- zlib -> transform streams are duplex streams which cal also modify or transform data as it is read or written
+// understanding streams in practice
 
 
 const readline = require('readline');
@@ -58,7 +66,10 @@ const http = require('http');
 const { error, profile } = require('console');
 const path = require('path');
 const url = require('url');
+// user defined module
 const replaceHtml = require('./Modules/replaceHtml');
+const events = require('events');
+const user = require('./Modules/user');
 
 // creating the web server
 // 1. create server
@@ -167,7 +178,7 @@ let productDetailtHtml = fs.readFileSync('./Template/product-details.html', 'utf
 
 const server = http.createServer(); // when ever new request hit the server request listen event
 // event driven architecture
-server.on('request',(request, response) =>{
+server.on('request', (request, response) => {
     // response.end('<h1>Hello from the server<h1>')
     // response.end(html)
     // console.log('new request running')
@@ -240,3 +251,19 @@ server.listen(8000, '127.0.0.1', () => {
 // all the event emitter , sever inherits from eventemitter calss
 // observer pattern
 // decoupled module
+
+// let myEmitter = new events.EventEmitter();
+
+let myEmitter = new user();// creating instance to call the user() class
+
+
+
+myEmitter.on('userCreate', (id, name) => {
+    console.log(` a new ${name} with id ${id} user is created!`)
+})
+myEmitter.on('userCreate', (id, name) => {
+    console.log(` a new user ${name} with id ${id}  data base created!`)
+})
+
+myEmitter.emit('userCreate', 101, 'john');
+// create class custom event
