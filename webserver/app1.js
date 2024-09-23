@@ -281,24 +281,39 @@ server.listen(8000, '127.0.0.1', () => {
 //     })
 // })
 // solution 2: using readbale and writable streams
-server.on('request',(req, res) =>{
-    // fs.readFile('./Files/large-file.txt', (err, data) =>{
-    //     if(err){
-    //         res.end('somethig went wrong')
-    //         return;
-    //     }
-    //     res.end(data);
-    // })
-    let rs = fs.createReadStream('./Files/large-file.txt');
-    rs.on('data', (chunk) => {
-        // res.end(chunk)
-        res.write(chunk) // piece of data storing the data from the response and save the large memory because of the all the data on stores checun varibale at the each new data coming from the response
-        res.end(chunk);
+// server.on('request',(req, res) =>{
+//     // fs.readFile('./Files/large-file.txt', (err, data) =>{
+//     //     if(err){
+//     //         res.end('somethig went wrong')
+//     //         return;
+//     //     }
+//     //     res.end(data);
+//     // })
+//     let rs = fs.createReadStream('./Files/large-file.txt');
+//     rs.on('data', (chunk) => {
+//         // res.end(chunk)
+//         res.write(chunk) // piece of data storing the data from the response and save the large memory because of the all the data on stores checun varibale at the each new data coming from the response
+//         // res.end(chunk);
 
         
 
-    })
-    rs.on('error', (error)=>{
-        res.end(error.message)
-    })
-})
+//     })
+//     rs.on('end', () =>{
+//         res.end(); // no more chucnk data then callin this one
+//     })
+//     rs.on('error', (error)=>{
+//         res.end(error.message)
+//     }); // readblae fast and write fast less recieve use pipe mthod
+// })
+
+// solution 2 pipe method
+
+server.on('request',(req, res)=>{
+    let rs = fs.createReadStream('./Files/large-file.txt');
+    rs.pipe(res)// pipe method is available is reable strwam not writable stream, 
+    // when use this pipe method back pressuere , speed data coming and out, 
+    // its fixes the back pressure, written code in the less code
+    // only the readble stream
+    // readable sourece
+    //readablesource.pipe(writableDest)
+} )

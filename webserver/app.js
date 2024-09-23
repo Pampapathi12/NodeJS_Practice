@@ -58,7 +58,33 @@
 // duplex stream :-  bothe readbake and writable streams -> web sockets
 // transfrom stream :- zlib -> transform streams are duplex streams which cal also modify or transform data as it is read or written
 // 23. understanding streams in practice
-
+// 24. understand PIPE method
+// 25. what is NPM (node pack manager), // package repositiry, commandline interface
+// where we can install package ans manage, npm commanda line interface installed automaticaluuy when npm install the npm and packgesa
+// from package repository, npmjs.com -> repositorsy
+// npm command line interface -> third part packages
+// 26. types of packages and install
+// types of dependencies, (regular dependencies)(development dependencies)
+// 27. archietecture of nodejs runtime (v8 engine convert javascript code into machine code (nodejs) LIBUV => open source async input and output, handling )
+// LIBUV C++ provides the file system (eventloop and threadpool)
+// event loop -> responsibly easy task call back method execution, 
+// thread pool exectution is the execution of the heavy process application like file processing
+// nodejs (c++) => HTTP parser, C-ares, openssl, ZLIB
+// I. all the modules and function call and console in the are executin main thred
+// II. thread pool -> all others fs function excuted in the thread poll readFile in the thread pool , in these function we have call back function the once the readfile is completed tthen the call back function pushed into the Eventpool -> inthe event pool call back wait for the execution until the main thread is empty
+// III. multiple call back in the event the pool -> event full start the pushes the call back to the main FIFO
+// IV.if the call back heavy task will not execute in the main thread, it will move to the thread pool and execution
+// V heavy task are in thread pool
+// 28. event loop in Nodejs
+// event loop have phases, expired timers, io tasks and polling, setimmidiate callback, cloed callback
+// one by one call back execution in the phases and and again it will chek the timers and settimeout call back function will execute
+// microtask queue (promise), nexttick queue (in the call back in the nexttick queue call back functions)
+// 29. NodeJS Event Loop in practice
+// 30. What is Express JS (is nodejs framework for the nodejs), it have minimul code to like .net framework
+// using express minimal the code, express is completely build on nodejs
+// express contains very robust ans useful set of features
+// faster and simpler
+// exprees makes developer Architectuter
 
 const readline = require('readline');
 const fs = require('fs');
