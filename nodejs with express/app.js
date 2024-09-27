@@ -5,6 +5,12 @@
 // api -> application programming interface(api is piece of software that can be used by another piece of software in order to talk or communicate each other )
 // import package
 // 33. REST Architecture(target 33,34,35,36,37,38)
+// representational state transfer(rest)
+// I. seperate APIs into logical resources (movies, users, reviews, is an object or representation of something which data associates)
+// II. expose structure, resources based URL (https://proacademy.com/addmoview) , getmovies, updatemovies, end point caontain the resorces not action performed the by user
+// sateless means -> routing sould be done in the client side routing not server side routing, when moving one page to another page, server should check the previuls and cureent page and then resources will send, but in state
+// stateless all the are the client seide routing so the all the  routing should be remember the old and current route to remember the routes and configuration and going to next page
+// 34. API: Handling GET request
 
 const express = require('express')
 
