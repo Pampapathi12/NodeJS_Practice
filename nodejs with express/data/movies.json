@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "name": "die hard",
+        "relaseYear": 1998,
+        "duration": 90
+    },
+    {
+        "id": 2,
+        "name": "die hard",
+        "relaseYear": 1998,
+        "duration": 90
+    },
+    {
+        "id": 3,
+        "name": "die hard",
+        "relaseYear": 1998,
+        "duration": 90
+    },
+    {
+        "id": 4,
+        "name": "die hard",
+        "relaseYear": 1998,
+        "duration": 90
+    },
+    {
+        "id": 5,
+        "name": "die hard",
+        "relaseYear": 1998,
+        "duration": 90
+    }
+]
